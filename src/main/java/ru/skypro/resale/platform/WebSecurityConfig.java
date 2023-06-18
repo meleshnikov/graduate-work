@@ -1,4 +1,4 @@
-package ru.skypro.homework;
+package ru.skypro.resale.platform;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 

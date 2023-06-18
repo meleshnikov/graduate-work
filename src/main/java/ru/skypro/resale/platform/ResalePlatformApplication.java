@@ -1,11 +1,11 @@
-package ru.skypro.homework;
+package ru.skypro.resale.platform;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HomeworkApplication {
+public class ResalePlatformApplication {
   public static void main(String[] args) {
-    SpringApplication.run(HomeworkApplication.class, args);
+    SpringApplication.run(ResalePlatformApplication.class, args);
   }
 }

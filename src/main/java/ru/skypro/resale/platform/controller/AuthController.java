@@ -1,4 +1,4 @@
-package ru.skypro.homework.controller;
+package ru.skypro.resale.platform.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.homework.dto.LoginReq;
-import ru.skypro.homework.dto.RegisterReq;
-import ru.skypro.homework.dto.Role;
-import ru.skypro.homework.service.AuthService;
-
-import static ru.skypro.homework.dto.Role.USER;
+import ru.skypro.resale.platform.dto.LoginReq;
+import ru.skypro.resale.platform.dto.RegisterReq;
+import ru.skypro.resale.platform.dto.Role;
+import ru.skypro.resale.platform.service.AuthService;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
@@ -34,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterReq req) {
-        Role role = req.getRole() == null ? USER : req.getRole();
+        Role role = req.getRole() == null ? Role.USER : req.getRole();
         if (authService.register(req, role)) {
             return ResponseEntity.ok().build();
         } else {
