@@ -1,0 +1,9 @@
+package ru.skypro.resale.platform.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import ru.skypro.resale.platform.entity.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
+}
