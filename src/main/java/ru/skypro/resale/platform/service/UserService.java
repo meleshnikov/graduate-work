@@ -6,4 +6,5 @@ import org.openapitools.model.UserDto;
 public interface UserService {
 
     UserDto getUser(String email);
+    UserDto updateUser(UserDto user, String email);
 }

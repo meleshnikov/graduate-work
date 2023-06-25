@@ -17,7 +17,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String email) {
-        var user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        return userMapper.entityToDto(user);
+        var foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        return userMapper.userEntityToUserDto(foundUser);
+    }
+
+    @Override
+    public UserDto updateUser(UserDto user, String email) {
+        var foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        userMapper.updateUserEntity(user, foundUser);
+        return userMapper.userEntityToUserDto(foundUser);
     }
 }
