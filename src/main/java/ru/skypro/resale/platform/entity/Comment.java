@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Getter
@@ -29,7 +30,7 @@ public class Comment {
     private Ads ads;
 
     @Column(name = "created_at")
-    private String createdAt;
+    private OffsetDateTime createdAt;
 
     @Column(name = "text")
     private String text;
