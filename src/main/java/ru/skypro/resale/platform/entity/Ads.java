@@ -33,9 +33,8 @@ public class Ads {
     @Column(name = "description")
     private String description;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "ads")
-    private Set<Image> images;
+    @Column(name = "image")
+    private String image;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "ads")

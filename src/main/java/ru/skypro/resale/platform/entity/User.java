@@ -31,8 +31,8 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "avatar")
+    private String avatar;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")
