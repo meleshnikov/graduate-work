@@ -84,15 +84,16 @@ public class UserController {
     @Operation(
             operationId = "updateUserImage",
             summary = "Обновить аватар авторизованного пользователя",
-            tags = { "Пользователи" },
+            tags = {"Пользователи"},
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "Not Found")
             }
     )
     @PatchMapping(value = "/me/image", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateUserImage(@RequestPart(value = "image") MultipartFile image) {
-        //TODO
-        return null;
+    public ResponseEntity<Void> updateUserImage(@RequestPart(value = "image") MultipartFile image,
+                                                Authentication authentication) {
+        userService.updateAvatar(image, authentication.getName());
+        return ResponseEntity.ok().build();
     }
 }

@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "first_name")
@@ -31,8 +31,8 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "avatar")
-    private String avatar;
+    @Column(name = "avatar_path")
+    private String avatarPath;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")
