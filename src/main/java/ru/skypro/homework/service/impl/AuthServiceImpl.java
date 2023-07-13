@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,12 @@ public class AuthServiceImpl implements AuthService {
     }
     registerReq.setRole(role);
     manager.createUser(userMapper.toUser(registerReq));
-//        User.builder()
-//            .passwordEncoder(this.encoder::encode)
-//            .password(registerReq.getPassword())
-//            .username(registerReq.getUsername())
-//            .roles(role.name())
-//            .build());
+        User.builder()
+            .passwordEncoder(this.encoder::encode)
+            .password(registerReq.getPassword())
+            .username(registerReq.getUsername())
+            .roles(role.name())
+            .build();
 
     return true;
   }
