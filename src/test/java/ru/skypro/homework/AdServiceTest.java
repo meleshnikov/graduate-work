@@ -80,7 +80,7 @@ public class AdServiceTest {
 
     @Test
     public void testUpdateAdImage() throws IOException {
-        MultipartFile image = new MockMultipartFile(AdServiceTestHelp.FILE_NAME, FILE_CONTENT);
+        MultipartFile image = new MockMultipartFile(FILE_NAME, FILE_CONTENT);
         when(adRepository.findById(TEST_ID)).thenReturn(Optional.of(new Ad()));
         when(imageRepository.findById(TEST_ID)).thenReturn(Optional.of(new Image()));
         when(imageRepository.save(any(Image.class))).thenReturn(new Image());

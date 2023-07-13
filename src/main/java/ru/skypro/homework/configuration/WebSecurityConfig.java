@@ -30,15 +30,15 @@ public class WebSecurityConfig {
             "/ads/image/*/from-db"
     };
 
-    @Bean
-    public JdbcUserDetailsManager userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user@gmail.com")
-                .password("password")
-                .roles("USER")
-                .build();
-        return new JdbcUserDetailsManager((DataSource) user);
-    }
+//    @Bean
+//    public JdbcUserDetailsManager userDetailsService() {
+//        UserDetails user = User.withDefaultPasswordEncoder()
+//                .username("user@gmail.com")
+//                .password("password")
+//                .roles("USER")
+//                .build();
+//        return new JdbcUserDetailsManager((DataSource) user);
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
