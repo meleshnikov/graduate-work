@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.*;
@@ -72,6 +74,7 @@ public class AdsController {
                             description = "Unauthorized"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAd(@RequestPart("properties") CreateAdsDto properties,
                                         @RequestPart("image") MultipartFile image) throws IOException {
@@ -102,6 +105,7 @@ public class AdsController {
                             description = "Unauthorized"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("{id}/comments")
     public ResponseEntity<ResponseWrapperComment> getComments(@PathVariable Integer id) {
         return ResponseEntity.ok(commentService.getComments(id));
@@ -137,6 +141,7 @@ public class AdsController {
                             description = "Unauthorized"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("{id}/comments")
     public ResponseEntity<CommentDto> addComment(@PathVariable Integer id, @RequestBody CreateCommentDto createCommentDto) {
         return ResponseEntity.ok(commentService.addComment(id, createCommentDto));
@@ -166,6 +171,7 @@ public class AdsController {
                             description = "Unauthorized"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("{id}")
     public ResponseEntity<FullAdsDto> getAds(@PathVariable Integer id) {
         return ResponseEntity.ok(adService.getAds(id));
@@ -195,6 +201,7 @@ public class AdsController {
                             description = "Forbidden"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> removeAd(@PathVariable Integer id) {
         if (adService.hasAdAccess(id)) {
@@ -238,6 +245,7 @@ public class AdsController {
                             description = "Forbidden"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping("{id}")
     public ResponseEntity<AdsDto> updateAds(@PathVariable Integer id, @RequestBody CreateAdsDto createAdsDto) {
         if (adService.hasAdAccess(id)) {
@@ -276,6 +284,7 @@ public class AdsController {
                             description = "Forbidden"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Integer adId, @PathVariable Integer commentId) {
         if (commentService.hasCommentAccess(commentId)) {
@@ -325,6 +334,7 @@ public class AdsController {
                             description = "Forbidden"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping("{adId}/comments/{commentId}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable Integer adId, @PathVariable Integer commentId, @RequestBody CommentDto commentDto) {
         if (commentService.hasCommentAccess(commentId)) {
@@ -349,6 +359,7 @@ public class AdsController {
                             description = "Unauthorized"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("me")
     public ResponseEntity<ResponseWrapperAds> getAdsMe() {
 
@@ -389,13 +400,14 @@ public class AdsController {
                             description = "Forbidden"
                     )
             })
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping(value = "{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> updateImage(@PathVariable Integer id, @RequestParam MultipartFile image) throws IOException {
         adService.updateAdImage(id, image);
         return ResponseEntity.ok().build();
     }
 
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/image/{id}/from-db")
     public ResponseEntity<byte[]> getAdImage(@PathVariable Integer id) {
         Image image = adService.getAdImage(id);

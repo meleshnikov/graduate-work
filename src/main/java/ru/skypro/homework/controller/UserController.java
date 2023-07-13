@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.NewPasswordDto;
@@ -24,6 +26,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -50,6 +53,7 @@ public class UserController {
                             description = "Forbidden"
                     )
             })
+    @Secured("USER")
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPasswordDto newPassword) {
 
@@ -77,6 +81,7 @@ public class UserController {
                             description = "Unauthorized"
                     )
             })
+    @Secured("USER")
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUser() {
         return ResponseEntity.ok(userService.getUser());
@@ -104,6 +109,7 @@ public class UserController {
                             description = "Unauthorized"
                     )
             })
+    @Secured("USER")
     @PatchMapping("/me")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
         if (userService.updateUser(user)) {
@@ -117,7 +123,7 @@ public class UserController {
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     content = @Content(
                             mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
-                            schema = @Schema()     // TODO ???
+                            schema = @Schema()
                     )
             ),
             responses = {
@@ -130,6 +136,7 @@ public class UserController {
                             description = "Unauthorized"
                     )
             })
+    @Secured("USER")
     @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(@RequestParam("image") MultipartFile file) throws IOException {
 
@@ -137,6 +144,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @Secured("USER")
     @GetMapping("/image/{id}/from-db")
     public ResponseEntity<byte[]> getUserImage(@PathVariable Integer id) {
         Image image = userService.getUserImage(id);

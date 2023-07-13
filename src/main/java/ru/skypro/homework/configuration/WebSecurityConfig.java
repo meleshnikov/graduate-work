@@ -48,6 +48,7 @@ public class WebSecurityConfig {
                                         .permitAll()
                                         .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
                                         .mvcMatchers("/ads/**", "/users/**").authenticated()
+                                        .mvcMatchers("/ads/**").hasRole("ADMIN").anyRequest().authenticated()
                 )
                 .cors()
                 .and()
