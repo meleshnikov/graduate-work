@@ -459,7 +459,6 @@ components:
             - ADMIN
     LoginReq:
       type: object
-      required:
       properties:
         password:
           type: string

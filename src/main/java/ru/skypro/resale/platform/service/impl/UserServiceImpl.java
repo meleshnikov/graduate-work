@@ -5,6 +5,7 @@ import org.openapitools.model.UserDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.resale.platform.entity.User;
 import ru.skypro.resale.platform.exception.UserNotFoundException;
 import ru.skypro.resale.platform.mapper.UserMapper;
 import ru.skypro.resale.platform.repository.UserRepository;
@@ -24,21 +25,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(String email) {
-        var foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        return userMapper.userEntityToUserDto(foundUser);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        return userMapper.toUserDto(user);
     }
 
     @Override
-    public UserDto updateUser(UserDto user, String email) {
-        var foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        userMapper.updateUserEntity(user, foundUser);
-        return userMapper.userEntityToUserDto(userRepository.save(foundUser));
+    public UserDto updateUser(UserDto source, String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        userMapper.updateUser(user, source);
+        return userMapper.toUserDto(userRepository.save(user));
     }
 
     @Override
     public void updateAvatar(MultipartFile image, String name) {
         var user = userRepository.findByEmail(name).orElseThrow(UserNotFoundException::new);
-        user.setAvatarPath(fileService.saveFile(name, avatarsDirPath, image));
+        user.setImage(fileService.saveFile(name, avatarsDirPath, image));
         userRepository.save(user);
     }
 }

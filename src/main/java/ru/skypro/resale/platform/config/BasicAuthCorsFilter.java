@@ -1,4 +1,4 @@
-package ru.skypro.resale.platform.controller;
+package ru.skypro.resale.platform.config;
 
 
 import org.springframework.stereotype.Component;

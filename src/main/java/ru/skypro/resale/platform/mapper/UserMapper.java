@@ -10,11 +10,13 @@ import ru.skypro.resale.platform.entity.User;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    UserDto userEntityToUserDto(User source);
+    UserDto toUserDto(User source);
 
-    @Mapping(target = "avatarPath",ignore = true)
-    void updateUserEntity(UserDto userDto, @MappingTarget User user);
+    @Mapping(target = "id",ignore = true)
+    @Mapping(target = "image",ignore = true)
+    void updateUser(@MappingTarget User target, UserDto source);
 
-    @Mapping(source = "username", target = "email")
+    @Mapping(target = "email", source = "username")
+    @Mapping(target = "role", source = "role", defaultValue = "USER")
     User registerReqDtoToUser(RegisterReqDto registerReqDto);
 }

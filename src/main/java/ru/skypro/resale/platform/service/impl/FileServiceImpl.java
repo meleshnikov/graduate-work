@@ -17,7 +17,7 @@ public class FileServiceImpl implements FileService {
     public String saveFile(String name, String dir, MultipartFile file) {
         var extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
-        var filePath = Path.of(dir, name + extension);
+        var filePath = Path.of(dir, String.join(".", name, extension));
 
         try {
             Files.createDirectories(filePath.getParent());

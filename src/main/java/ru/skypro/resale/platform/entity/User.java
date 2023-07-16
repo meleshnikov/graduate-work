@@ -1,7 +1,12 @@
 package ru.skypro.resale.platform.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.Hibernate;
+import org.openapitools.model.RegisterReqDto.RoleEnum;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -12,7 +17,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "user_account")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -31,8 +36,15 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "avatar_path")
-    private String avatarPath;
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
+
+    @Column(name = "password")
+    private String password;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")
