@@ -12,8 +12,8 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "ads")
-public class Ads {
+@Table(name = "ad")
+public class Ad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class Ads {
     private String title;
 
     @Column(name = "price")
-    private int price;
+    private Integer price;
 
     @Column(name = "description")
     private String description;
@@ -37,15 +37,15 @@ public class Ads {
     private String image;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "ads")
+    @OneToMany(mappedBy = "ad")
     private Set<Comment> comments;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Ads ads = (Ads) o;
-        return getId() != null && Objects.equals(getId(), ads.getId());
+        Ad ad = (Ad) o;
+        return getId() != null && Objects.equals(getId(), ad.getId());
     }
 
     @Override

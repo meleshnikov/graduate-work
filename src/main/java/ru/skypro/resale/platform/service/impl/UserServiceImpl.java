@@ -24,22 +24,26 @@ public class UserServiceImpl implements UserService {
     private String avatarsDirPath;
 
     @Override
-    public UserDto getUser(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        return userMapper.toUserDto(user);
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     @Override
-    public UserDto updateUser(UserDto source, String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+    public UserDto getUser(String username) {
+        return userMapper.toUserDto(getUserByEmail(username));
+    }
+
+    @Override
+    public UserDto updateUser(UserDto source, String username) {
+        var user = getUserByEmail(username);
         userMapper.updateUser(user, source);
         return userMapper.toUserDto(userRepository.save(user));
     }
 
     @Override
-    public void updateAvatar(MultipartFile image, String name) {
-        var user = userRepository.findByEmail(name).orElseThrow(UserNotFoundException::new);
-        user.setImage(fileService.saveFile(name, avatarsDirPath, image));
+    public void updateAvatar(MultipartFile image, String username) {
+        var user = getUserByEmail(username);
+        user.setImage(fileService.saveFile(username, avatarsDirPath, image));
         userRepository.save(user);
     }
 }

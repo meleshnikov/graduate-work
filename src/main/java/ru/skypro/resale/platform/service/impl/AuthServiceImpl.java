@@ -22,8 +22,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserDetailsService userDetailsService;
 
     @Override
-    public boolean login(String userName, String password) {
-        var userDetails = userDetailsService.loadUserByUsername(userName);
+    public boolean login(String username, String password) {
+        var userDetails = userDetailsService.loadUserByUsername(username);
         return encoder.matches(password, userDetails.getPassword());
     }
 
@@ -38,8 +38,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean changePassword(NewPasswordDto newPassword, String userName) {
-        User user = userRepository.findByEmail(userName).orElseThrow(UserNotFoundException::new);
+    public boolean changePassword(NewPasswordDto newPassword, String username) {
+        User user = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
         if (encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
             user.setPassword(encoder.encode(newPassword.getNewPassword()));
             userRepository.save(user);

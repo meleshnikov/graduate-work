@@ -5,7 +5,7 @@ Content-Type: application/json
 Authorization: Basic user@gmail.com password
 
 ###
-GET http://localhost:8080/ads/asddsfsdf/comment
+GET http://localhost:8080/ad/asddsfsdf/comment
 Content-Type: application/json
 Authorization: Basic user@gmail.com password
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/ads/me
+GET http://localhost:8080/ad/me
 Content-Type: application/json
 Authorization: Basic user@gmail.com password
 
@@ -59,7 +59,7 @@ Content-Type: application/json
 Authorization: Basic user@gmail.com password
 
 ###
-GET http://localhost:8080/ads
+GET http://localhost:8080/ad
 Content-Type: application/json
 Authorization: Basic user@gmail.com password
 
@@ -75,7 +75,7 @@ Authorization: Basic user@gmail.com password
 }
 
 ###
-POST http://localhost:8080/ads
+POST http://localhost:8080/ad
 Content-Type: application/json
 Authorization: Basic user@gmail.com password
 
@@ -88,7 +88,7 @@ Authorization: Basic user@gmail.com password
 }
 
 ###
-GET http://localhost:8080/ads
+GET http://localhost:8080/ad
 Content-Type: application/json
 Authorization: Basic user@gmail.com password
 

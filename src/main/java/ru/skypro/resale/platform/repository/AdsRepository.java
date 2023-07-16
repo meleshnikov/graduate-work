@@ -2,8 +2,8 @@ package ru.skypro.resale.platform.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.skypro.resale.platform.entity.Ads;
+import ru.skypro.resale.platform.entity.Ad;
 
 @Repository
-public interface AdsRepository extends JpaRepository<Ads, Integer> {
+public interface AdsRepository extends JpaRepository<Ad, Integer> {
 }

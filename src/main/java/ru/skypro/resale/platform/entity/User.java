@@ -9,6 +9,7 @@ import org.hibernate.Hibernate;
 import org.openapitools.model.RegisterReqDto.RoleEnum;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -48,7 +49,7 @@ public class User {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")
-    private Set<Ads> ads;
+    private List<Ad> ads;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")

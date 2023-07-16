@@ -7,8 +7,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.model.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.resale.platform.service.AdService;
 
 import javax.validation.Valid;
 
@@ -19,7 +21,9 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RequestMapping("/ads")
 @RequiredArgsConstructor
 @CrossOrigin(value = "http://localhost:3000")
-public class AdsController {
+public class AdController {
+
+    private final AdService adService;
 
     @Operation(
             operationId = "addAd",
@@ -34,50 +38,11 @@ public class AdsController {
                     @ApiResponse(responseCode = "401", description = "Unauthorized")
             }
     )
-
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<AdsDto> addAd(@Valid @RequestPart CreateAdsDto properties,
-                                        @RequestPart MultipartFile image) {
-        //TODO
-        return null;
-    }
-
-    @Operation(
-            operationId = "addComment",
-            summary = "Добавить комментарий к объявлению",
-            tags = {"Комментарии"},
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = CommentDto.class))
-                    }),
-                    @ApiResponse(responseCode = "404", description = "Not Found"),
-                    @ApiResponse(responseCode = "403", description = "Forbidden"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized")
-            }
-    )
-    @PostMapping("/{id}/comments")
-    public ResponseEntity<CommentDto> addComment(@PathVariable Integer id,
-                                                 @RequestBody CommentDto commentDto) {
-        //TODO
-        return null;
-    }
-
-    @Operation(
-            operationId = "deleteComment",
-            summary = "Удалить комментарий",
-            tags = {"Комментарии"},
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "OK"),
-                    @ApiResponse(responseCode = "404", description = "Not Found"),
-                    @ApiResponse(responseCode = "403", description = "Forbidden"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized")
-            }
-    )
-    @DeleteMapping("/{adId}/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable("adId") Integer adId,
-                                              @PathVariable("commentId") Integer commentId) {
-        //TODO
-        return null;
+                                        @RequestPart MultipartFile image,
+                                        Authentication authentication) {
+        return ResponseEntity.ok(adService.addAd(properties, image, authentication.getName()));
     }
 
     @Operation(
@@ -93,9 +58,7 @@ public class AdsController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<FullAdsDto> getAds(@PathVariable Integer id) {
-        //TODO
-        return null;
-
+        return ResponseEntity.ok(adService.getFullAdsById(id));
     }
 
     @Operation(
@@ -111,10 +74,8 @@ public class AdsController {
             }
     )
     @GetMapping("/me")
-    public ResponseEntity<ResponseWrapperAdsDto> getAdsMe() {
-        //TODO
-        return null;
-
+    public ResponseEntity<ResponseWrapperAdsDto> getAdsMe(Authentication authentication) {
+        return ResponseEntity.ok(adService.getMyAds(authentication.getName()));
     }
 
     @Operation(
@@ -129,25 +90,7 @@ public class AdsController {
     )
     @GetMapping
     public ResponseEntity<ResponseWrapperAdsDto> getAllAds() {
-        //TODO
-        return null;
-    }
-
-    @Operation(
-            operationId = "getComments",
-            summary = "Получить комментарии объявления",
-            tags = {"Комментарии"},
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = ResponseWrapperCommentDto.class))
-                    }),
-                    @ApiResponse(responseCode = "404", description = "Not Found")
-            }
-    )
-    @GetMapping("/{id}/comments")
-    public ResponseEntity<ResponseWrapperCommentDto> getComments(@PathVariable Integer id) {
-        //TODO
-        return null;
+        return ResponseEntity.ok(adService.getAllAds());
     }
 
     @Operation(
@@ -182,27 +125,6 @@ public class AdsController {
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(@PathVariable Integer id,
                                             @Valid @RequestBody CreateAdsDto createAdsDto) {
-        //TODO
-        return null;
-    }
-
-    @Operation(
-            operationId = "updateComment",
-            summary = "Обновить комментарий",
-            tags = {"Комментарии"},
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "OK", content = {
-                            @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = CommentDto.class))
-                    }),
-                    @ApiResponse(responseCode = "404", description = "Not Found"),
-                    @ApiResponse(responseCode = "403", description = "Forbidden"),
-                    @ApiResponse(responseCode = "401", description = "Unauthorized")
-            }
-    )
-    @PatchMapping("/{adId}/comments/{commentId}")
-    public ResponseEntity<CommentDto> updateComment(@PathVariable("adId") Integer adId,
-                                                    @PathVariable("commentId") Integer commentId,
-                                                    @RequestBody CommentDto commentDto) {
         //TODO
         return null;
     }

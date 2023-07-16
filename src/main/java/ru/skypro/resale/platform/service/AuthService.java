@@ -4,7 +4,7 @@ import org.openapitools.model.NewPasswordDto;
 import org.openapitools.model.RegisterReqDto;
 
 public interface AuthService {
-    boolean login(String userName, String password);
+    boolean login(String username, String password);
     boolean register(RegisterReqDto registerReq);
-    boolean changePassword(NewPasswordDto newPassword, String userName);
+    boolean changePassword(NewPasswordDto newPassword, String username);
 }

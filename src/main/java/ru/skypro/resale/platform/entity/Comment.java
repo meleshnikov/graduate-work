@@ -26,8 +26,8 @@ public class Comment {
 
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "ads_id")
-    private Ads ads;
+    @JoinColumn(name = "ad_id")
+    private Ad ad;
 
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
