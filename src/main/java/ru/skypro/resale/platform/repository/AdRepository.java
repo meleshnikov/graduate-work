@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.resale.platform.entity.Ad;
 
 @Repository
-public interface AdsRepository extends JpaRepository<Ad, Integer> {
+public interface AdRepository extends JpaRepository<Ad, Integer> {
 }

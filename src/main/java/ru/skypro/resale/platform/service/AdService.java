@@ -18,4 +18,12 @@ public interface AdService {
     ResponseWrapperAdsDto getMyAds(String username);
 
     ResponseWrapperAdsDto getAllAds();
+
+    void removeAd(Integer id);
+
+    byte[] getImageAsBytes(String fileName);
+
+    void uploadImage(Integer id, MultipartFile image);
+
+    AdsDto updateAd(Integer id, CreateAdsDto createAdsDto);
 }

@@ -13,4 +13,6 @@ public interface UserService {
     UserDto updateUser(UserDto user, String username);
 
     void updateAvatar(MultipartFile image, String username);
+
+    byte[] getAvatarAsBytes(String fileName);
 }

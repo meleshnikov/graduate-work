@@ -96,4 +96,9 @@ public class UserController {
         userService.updateAvatar(image, authentication.getName());
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/avatars/{fileName}")
+    public ResponseEntity<byte[]> getAvatar(@PathVariable String fileName) {
+        return ResponseEntity.ok(userService.getAvatarAsBytes(fileName));
+    }
 }

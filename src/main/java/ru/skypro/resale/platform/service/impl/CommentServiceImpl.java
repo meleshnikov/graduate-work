@@ -19,7 +19,6 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final AdService adService;
     private final UserService userService;
-
     private final CommentMapper commentMapper;
 
     @Override

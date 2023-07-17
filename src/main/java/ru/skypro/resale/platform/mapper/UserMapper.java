@@ -14,6 +14,7 @@ public interface UserMapper {
 
     @Mapping(target = "id",ignore = true)
     @Mapping(target = "image",ignore = true)
+    @Mapping(target = "email",ignore = true)
     void updateUser(@MappingTarget User target, UserDto source);
 
     @Mapping(target = "email", source = "username")

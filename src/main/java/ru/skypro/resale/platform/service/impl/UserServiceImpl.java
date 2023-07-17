@@ -12,6 +12,8 @@ import ru.skypro.resale.platform.repository.UserRepository;
 import ru.skypro.resale.platform.service.FileService;
 import ru.skypro.resale.platform.service.UserService;
 
+import java.nio.file.Path;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -43,7 +45,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateAvatar(MultipartFile image, String username) {
         var user = getUserByEmail(username);
-        user.setImage(fileService.saveFile(username, avatarsDirPath, image));
+        user.setImage(fileService.saveFile(user.getId().toString(), avatarsDirPath, image));
         userRepository.save(user);
+    }
+
+    @Override
+    public byte[] getAvatarAsBytes(String fileName) {
+        return fileService.getBytes(Path.of(avatarsDirPath, fileName));
     }
 }

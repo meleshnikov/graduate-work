@@ -1,11 +1,14 @@
 package ru.skypro.resale.platform.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -37,8 +40,8 @@ public class Ad {
     private String image;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "ad")
-    private Set<Comment> comments;
+    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @Override
     public boolean equals(Object o) {

@@ -105,8 +105,8 @@ public class AdController {
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removeAd(@PathVariable Integer id) {
-        //TODO
-        return null;
+        adService.removeAd(id);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(
@@ -125,8 +125,7 @@ public class AdController {
     @PatchMapping("/{id}")
     public ResponseEntity<AdsDto> updateAds(@PathVariable Integer id,
                                             @Valid @RequestBody CreateAdsDto createAdsDto) {
-        //TODO
-        return null;
+        return ResponseEntity.ok(adService.updateAd(id, createAdsDto));
     }
 
     @Operation(
@@ -141,9 +140,14 @@ public class AdController {
             }
     )
     @PatchMapping(value = "/{id}/image", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> updateImage(@PathVariable Integer id,
+    public ResponseEntity<?> updateImage(@PathVariable Integer id,
                                               @RequestPart MultipartFile image) {
-        //TODO
-        return null;
+        adService.uploadImage(id, image);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/img/{fileName}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String fileName) {
+        return ResponseEntity.ok(adService.getImageAsBytes(fileName));
     }
 }
