@@ -53,7 +53,6 @@ public class UserController {
                             description = "Forbidden"
                     )
             })
-    @Secured("USER")
     @PostMapping("/set_password")
     public ResponseEntity<?> setPassword(@RequestBody NewPasswordDto newPassword) {
 
@@ -81,7 +80,6 @@ public class UserController {
                             description = "Unauthorized"
                     )
             })
-    @Secured("USER")
     @GetMapping("/me")
     public ResponseEntity<UserDto> getUser() {
         return ResponseEntity.ok(userService.getUser());
@@ -109,7 +107,6 @@ public class UserController {
                             description = "Unauthorized"
                     )
             })
-    @Secured("USER")
     @PatchMapping("/me")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user) {
         if (userService.updateUser(user)) {
@@ -136,7 +133,6 @@ public class UserController {
                             description = "Unauthorized"
                     )
             })
-    @Secured("USER")
     @PatchMapping(value = "me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateUserImage(@RequestParam("image") MultipartFile file) throws IOException {
 
@@ -144,7 +140,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @Secured("USER")
+
     @GetMapping("/image/{id}/from-db")
     public ResponseEntity<byte[]> getUserImage(@PathVariable Integer id) {
         Image image = userService.getUserImage(id);

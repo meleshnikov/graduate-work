@@ -180,7 +180,7 @@ public class AdServiceTest {
     @Test
     public void testGetAdsNotFound() {
         when(adRepository.findById(TEST_ID)).thenReturn(Optional.empty());
-        FullAdsDto result = adService.getAds(TEST_ID);
+        FullAdsDto result = adService.getFullAd(TEST_ID);
         assertNull(result);
     }
 
@@ -200,7 +200,7 @@ public class AdServiceTest {
         when(adRepository.findById(TEST_ID)).thenReturn(Optional.of(ad));
         when(adMapper.toFullAdsDto(ad)).thenReturn(expectedFullAdsDto);
 
-        FullAdsDto result = adService.getAds(TEST_ID);
+        FullAdsDto result = adService.getFullAd(TEST_ID);
 
         Assertions.assertEquals(expectedFullAdsDto.getPk(), result.getPk());
         Assertions.assertEquals(expectedFullAdsDto.getTitle(), result.getTitle());
@@ -276,7 +276,7 @@ public class AdServiceTest {
         when(adRepository.findById(TEST_ID)).thenReturn(Optional.of(existingAd));
         when(adMapper.toAdsDto(existingAd)).thenReturn(expectedAdsDto);
 
-        AdsDto result = adService.updateDto(TEST_ID, updateProperties);
+        AdsDto result = adService.updateAd(TEST_ID, updateProperties);
         assertNotNull(result);
         assertEquals(TEST_ID, result.getPk());
         assertEquals(TITLE, result.getTitle());

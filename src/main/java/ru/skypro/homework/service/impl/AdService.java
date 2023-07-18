@@ -66,7 +66,7 @@ public class AdService {
     }
 
     @Transactional
-    public FullAdsDto getAds(Integer id) {
+    public FullAdsDto getFullAd(Integer id) {
         return adRepository.findById(id).map(adMapper::toFullAdsDto).orElse(null);
     }
 
@@ -99,7 +99,7 @@ public class AdService {
     }
 
     @Transactional
-    public AdsDto updateDto(Integer id, CreateAdsDto properties) {
+    public AdsDto updateAd(Integer id, CreateAdsDto properties) {
         Ad ad = adRepository.findById(id).orElseThrow();
         ad.setTitle(properties.getTitle());
         ad.setDescription(properties.getDescription());

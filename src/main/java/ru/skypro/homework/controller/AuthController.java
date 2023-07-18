@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import ru.skypro.homework.service.AuthService;
 
 import static ru.skypro.homework.dto.Role.USER;
 
+@Data
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
