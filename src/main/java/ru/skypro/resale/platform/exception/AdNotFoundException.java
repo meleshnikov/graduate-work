@@ -1,4 +1,11 @@
 package ru.skypro.resale.platform.exception;
 
-public class AdNotFoundException extends RuntimeException{
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import javax.persistence.EntityNotFoundException;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+@ResponseStatus(code = BAD_REQUEST)
+public class AdNotFoundException extends EntityNotFoundException {
 }

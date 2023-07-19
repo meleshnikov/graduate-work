@@ -18,8 +18,8 @@ public class FileServiceImpl implements FileService {
     @Override
     public String saveFile(String name, String dir, MultipartFile file) {
         var extension = FilenameUtils.getExtension(file.getOriginalFilename());
-
-        var filePath = Path.of(dir, String.join(".", name, extension));
+        var nameWithExtension = String.join(".", name, extension);
+        var filePath = Path.of(dir, nameWithExtension);
 
         try {
             Files.createDirectories(filePath.getParent());
@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
         } catch (IOException ex) {
             throw new FileNotSavedException("Не удалось сохранить файл");
         }
-        return "/" + filePath.toString().replace("\\", "/");
+        return String.format("/%s/%s", dir, nameWithExtension);
     }
 
     @Override

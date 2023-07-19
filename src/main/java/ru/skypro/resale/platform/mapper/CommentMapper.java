@@ -24,7 +24,8 @@ public interface CommentMapper {
 
     @Mapping(target = "author", source = "author.id")
     @Mapping(target = "authorFirstName", source = "author.firstName")
-    @Mapping(target = "pk", source = "ad.id")
+    @Mapping(target = "authorImage", source = "author.image")
+    @Mapping(target = "pk", source = "id")
     @Mapping(target = "createdAt", expression = "java(toLong(source.getCreatedAt()))")
     CommentDto toCommentDto(Comment source);
 

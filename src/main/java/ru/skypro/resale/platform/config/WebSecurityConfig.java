@@ -3,6 +3,7 @@ package ru.skypro.resale.platform.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
   private static final String[] AUTH_WHITELIST = {
@@ -31,7 +33,7 @@ public class WebSecurityConfig {
                             authorization
                                     .mvcMatchers(AUTH_WHITELIST)
                                     .permitAll()
-                                    .mvcMatchers(HttpMethod.GET, "/ads", "/ads/image/**", "/users/image/**")
+                                    .mvcMatchers(HttpMethod.GET, "/ads/**", "/users/avatars/**")
                                     .permitAll()
                                     .mvcMatchers("/ads/**", "/users/**")
                                     .authenticated())

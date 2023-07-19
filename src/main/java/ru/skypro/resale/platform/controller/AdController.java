@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.openapitools.model.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -104,7 +105,9 @@ public class AdController {
             }
     )
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeAd(@PathVariable Integer id) {
+    @PreAuthorize("@adServiceImpl.getAdById(#id).author.email.equals(#authentication.name) or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> removeAd(@PathVariable Integer id,
+                                         Authentication authentication) {
         adService.removeAd(id);
         return ResponseEntity.ok().build();
     }
@@ -146,7 +149,7 @@ public class AdController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/img/{fileName}")
+    @GetMapping("/images/{fileName}")
     public ResponseEntity<byte[]> getImage(@PathVariable String fileName) {
         return ResponseEntity.ok(adService.getImageAsBytes(fileName));
     }

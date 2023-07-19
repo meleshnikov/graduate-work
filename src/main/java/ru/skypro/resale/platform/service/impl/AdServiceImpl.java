@@ -27,7 +27,7 @@ public class AdServiceImpl implements AdService {
     private final AdRepository adRepository;
     private final UserService userService;
     private final FileService fileService;
-    @Value("${ad.images.dir}")
+    @Value("${ads.images.dir}")
     private String imagesDirPath;
 
     @Override
@@ -84,9 +84,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdsDto updateAd(Integer id, CreateAdsDto createAdsDto) {
         var ad = getAdById(id);
-        ad.setTitle(createAdsDto.getTitle());
-        ad.setPrice(createAdsDto.getPrice());
-        ad.setDescription(createAdsDto.getDescription());
+        adMapper.updateAd(ad, createAdsDto);
         return adMapper.toAdsDto(adRepository.save(ad));
     }
 }

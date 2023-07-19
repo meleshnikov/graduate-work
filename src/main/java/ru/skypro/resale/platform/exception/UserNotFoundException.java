@@ -1,8 +1,11 @@
 package ru.skypro.resale.platform.exception;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.NO_CONTENT)
-public class UserNotFoundException extends RuntimeException {
+import javax.persistence.EntityNotFoundException;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+@ResponseStatus(code = BAD_REQUEST)
+public class UserNotFoundException extends EntityNotFoundException {
 }

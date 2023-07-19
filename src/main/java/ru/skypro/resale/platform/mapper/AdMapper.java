@@ -2,6 +2,7 @@ package ru.skypro.resale.platform.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.openapitools.model.AdsDto;
 import org.openapitools.model.CreateAdsDto;
 import org.openapitools.model.FullAdsDto;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface AdMapper {
     Ad createAdsDtoToAd(CreateAdsDto source);
+
+    void updateAd(@MappingTarget Ad target, CreateAdsDto source);
 
     @Mapping(target = "pk", source = "id")
     @Mapping(target = "author", source = "author.id")

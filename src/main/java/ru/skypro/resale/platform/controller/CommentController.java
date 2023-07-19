@@ -9,6 +9,7 @@ import org.openapitools.model.CommentDto;
 import org.openapitools.model.CreateCommentDto;
 import org.openapitools.model.ResponseWrapperCommentDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.resale.platform.service.CommentService;
@@ -55,6 +56,7 @@ public class CommentController {
             }
     )
     @DeleteMapping("/{adId}/comments/{commentId}")
+    @PreAuthorize("@commentServiceImpl.getCommentById(#commentId).author.email.equals(#authentication.name) or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteComment(@PathVariable("adId") Integer adId,
                                               @PathVariable("commentId") Integer commentId,
                                               Authentication authentication) {
@@ -92,9 +94,11 @@ public class CommentController {
             }
     )
     @PatchMapping("/{adId}/comments/{commentId}")
+    @PreAuthorize("@commentServiceImpl.getCommentById(#commentId).author.email.equals(#authentication.name) or hasRole('ROLE_ADMIN')")
     public ResponseEntity<CommentDto> updateComment(@PathVariable("adId") Integer adId,
                                                     @PathVariable("commentId") Integer commentId,
-                                                    @RequestBody CommentDto commentDto) {
+                                                    @RequestBody CommentDto commentDto,
+                                                    Authentication authentication) {
         return ResponseEntity.ok(commentService.updateComment(commentId, commentDto));
     }
 }

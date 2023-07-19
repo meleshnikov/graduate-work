@@ -91,8 +91,8 @@ public class UserController {
             }
     )
     @PatchMapping(value = "/me/image", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> updateUserImage(@RequestPart(value = "image") MultipartFile image,
-                                                Authentication authentication) {
+    public ResponseEntity<Void> updateAvatar(@RequestPart(value = "image") MultipartFile image,
+                                             Authentication authentication) {
         userService.updateAvatar(image, authentication.getName());
         return ResponseEntity.ok().build();
     }
