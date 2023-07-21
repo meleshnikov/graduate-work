@@ -1,33 +1,34 @@
 package ru.skypro.homework.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
+import ru.skypro.homework.dto.LoginReqDto;
 import ru.skypro.homework.dto.RegisterReqDto;
+import ru.skypro.homework.dto.SecurityUserDto;
 import ru.skypro.homework.dto.UserDto;
+import ru.skypro.homework.entity.Image;
 import ru.skypro.homework.entity.User;
 
-@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
-    User toUser(RegisterReqDto registerReqDto);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", defaultValue = "USER")
+    @Mapping(target = "image", source = "image")
+    User toEntity(UserDto dto);
 
-    @Mapping(source = "username", target = "email")
-    @Mapping(target = "image", expression = "java(getImage(user))")
-    void toUserDto(@MappingTarget UserDto userDto, User user);
+    @Mapping(target = "image",expression = "java(imageMapper(entity))")
+    UserDto toDTO(User entity);
 
-    default String getImage(User user) {
-        if (user.getImage() == null) {
-            return null;
-        }
-        return "/users/image/" + user.getId() + "/from-db";
+    default String imageMapper(User user){
+        return "/users/"+ user.getId() + "/image";
     }
 
-    @Mapping(ignore = true, target = "user.id")
-    @Mapping(ignore = true, target = "user.image")
-    @Mapping(ignore = true, target = "user.username")
-    void toUser(@MappingTarget User user, UserDto userDto);
+    Image map(String value);
 
+    User toEntity(LoginReqDto dto);
 
+    @Mapping(target = "email", source = "username")
+    User toEntity(RegisterReqDto req);
+
+    SecurityUserDto toSecurityDto(User user);
 }

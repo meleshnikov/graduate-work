@@ -2,8 +2,8 @@ package ru.skypro.homework.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
@@ -43,23 +43,36 @@ public class WebSecurityConfig {
 //        return new InMemoryUserDetailsManager(user);
 //    }
 
+    /**
+     * 
+     * @param http
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .csrf()
                 .disable()
                 .authorizeHttpRequests(
                         (authorization) ->
                                 authorization
                                         .mvcMatchers(AUTH_WHITELIST)
                                         .permitAll()
-                                        .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
-                                        .mvcMatchers("/ads/**", "/users/**").authenticated())
+                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .authenticated())
                 .cors()
                 .and()
                 .httpBasic(withDefaults());
         return http.build();
     }
 
+    /**
+     * password encoding
+     * @return encoded password
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

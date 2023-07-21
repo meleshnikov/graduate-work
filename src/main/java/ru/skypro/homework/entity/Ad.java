@@ -11,14 +11,27 @@ import java.awt.*;
 public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String description;
     private int price;
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JoinColumn(name = "user_id")
+    private User author;
 
     @OneToOne
+    @JoinColumn(name = "image_id")
     private Image image;
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                '}';
+    }
 }

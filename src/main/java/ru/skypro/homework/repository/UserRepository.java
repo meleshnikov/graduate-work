@@ -7,7 +7,9 @@ import ru.skypro.homework.entity.User;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByUsername(String username);
-    Integer getImageById(Integer userId);
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByEmailIgnoreCase(String email);
+    Optional<User> findByPassword(String password);
+    User getUserByEmail(String email);
 }

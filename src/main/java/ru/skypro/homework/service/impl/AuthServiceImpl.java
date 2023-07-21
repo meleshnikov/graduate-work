@@ -1,53 +1,48 @@
 package ru.skypro.homework.service.impl;
 
-import org.springframework.security.core.userdetails.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.RegisterReqDto;
 import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.entity.User;
 import ru.skypro.homework.mapper.UserMapper;
+import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.security.MyUserDetailsService;
 import ru.skypro.homework.service.AuthService;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-  private final UserService manager;
+    private final MyUserDetailsService manager;
 
-  private final PasswordEncoder encoder;
-  private final UserMapper userMapper;
+    private final PasswordEncoder encoder;
 
-  public AuthServiceImpl(UserService manager, PasswordEncoder encoder, UserMapper userMapper) {
-    this.manager = manager;
-    this.encoder = encoder;
-    this.userMapper = userMapper;
-  }
+    private final UserRepository userRepository;
 
-  @Override
-  @Transactional
-  public boolean login(String userName, String password) {
-    if (!manager.userExists(userName)) {
-      return false;
+    private final UserMapper userMapper;
+
+    @Override
+    public boolean login(String userName, String password) {
+        log.info("login: " + userName + " password: " + password);
+        UserDetails userDetails = manager.loadUserByUsername(userName);
+        return encoder.matches(password, userDetails.getPassword());
     }
-    UserDetails userDetails = manager.loadUserByUsername(userName);
-    return encoder.matches(password, userDetails.getPassword());
-  }
 
-  @Override
-  public boolean register(RegisterReqDto registerReq, Role role) {
-    if (manager.userExists(registerReq.getUsername())) {
-      return false;
+    @Override
+    public boolean register(RegisterReqDto registerReq, Role role) {
+        if (userRepository.findByEmailIgnoreCase(registerReq.getUsername()).isPresent()) {
+            return false;
+        }
+        User regUser = userMapper.toEntity(registerReq);
+        regUser.setRole(role);
+        regUser.setPassword(encoder.encode(regUser.getPassword()));
+        userRepository.save(regUser);
+        return true;
     }
-    registerReq.setRole(role);
-    manager.createUser(userMapper.toUser(registerReq));
-        User.builder()
-            .passwordEncoder(this.encoder::encode)
-            .password(registerReq.getPassword())
-            .username(registerReq.getUsername())
-            .roles(role.name())
-            .build();
 
-    return true;
-  }
 }

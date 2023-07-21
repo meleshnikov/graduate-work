@@ -45,9 +45,9 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
-      <version>1.6.14</version>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok-mapstruct-binding</artifactId>
+      <version>${lombok-mapstruct-binding.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -60,6 +60,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.6.9</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
@@ -69,19 +75,15 @@
       <artifactId>liquibase-core</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-core</artifactId>
+      <version>2.2.7</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
-      <version>${org.mapstruct.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-taglibs</artifactId>
-      <version>5.2.0.RELEASE</version>
+      <version>1.5.5.Final</version>
     </dependency>
   </dependencies>
 
@@ -99,13 +101,14 @@
           </excludes>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.5.1</version>
         <configuration>
-          <source>11</source> <!-- depending on your project -->
-          <target>11</target> <!-- depending on your project -->
+          <source>${java.version}</source>
+          <target>${java.version}</target>
           <annotationProcessorPaths>
             <path>
               <groupId>org.mapstruct</groupId>
@@ -122,7 +125,6 @@
               <artifactId>lombok-mapstruct-binding</artifactId>
               <version>${lombok-mapstruct-binding.version}</version>
             </path>
-            <!-- other annotation processors -->
           </annotationProcessorPaths>
         </configuration>
       </plugin>

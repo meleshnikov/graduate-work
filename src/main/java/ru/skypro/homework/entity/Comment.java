@@ -11,13 +11,14 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     private LocalDateTime createdAt;
     private String text;
 
     @ManyToOne
-    private User user;
+    private User author;
 
     @ManyToOne
     private Ad ad;
