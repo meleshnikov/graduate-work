@@ -10,10 +10,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>ru.skypro</groupId>
-  <artifactId>ads</artifactId>
+  <artifactId>ad</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Ads application</name>
-  <description>Application for managing ads</description>
+  <description>Application for managing ad</description>
   <properties>
     <java.version>11</java.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
@@ -51,6 +51,10 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>

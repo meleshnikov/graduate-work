@@ -7,5 +7,5 @@ import javax.persistence.EntityNotFoundException;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @ResponseStatus(code = BAD_REQUEST)
-public class UserNotFoundException extends EntityNotFoundException {
+public class AdNotFoundException extends EntityNotFoundException {
 }

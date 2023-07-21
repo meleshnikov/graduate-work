@@ -1,9 +1,15 @@
 package ru.skypro.resale.platform.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.Hibernate;
+import org.openapitools.model.RegisterReqDto.RoleEnum;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,14 +18,14 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "user_account")
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "first_name")
@@ -31,12 +37,19 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "avatar")
-    private String avatar;
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
+
+    @Column(name = "password")
+    private String password;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")
-    private Set<Ads> ads;
+    private List<Ad> ads;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "author")

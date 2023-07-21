@@ -1,11 +1,14 @@
 package ru.skypro.resale.platform.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -13,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "ads")
-public class Ads {
+public class Ad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +31,7 @@ public class Ads {
     private String title;
 
     @Column(name = "price")
-    private int price;
+    private Integer price;
 
     @Column(name = "description")
     private String description;
@@ -37,15 +40,15 @@ public class Ads {
     private String image;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "ads")
-    private Set<Comment> comments;
+    @OneToMany(mappedBy = "ad", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Ads ads = (Ads) o;
-        return getId() != null && Objects.equals(getId(), ads.getId());
+        Ad ad = (Ad) o;
+        return getId() != null && Objects.equals(getId(), ad.getId());
     }
 
     @Override
